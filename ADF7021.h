@@ -144,6 +144,92 @@ www.analog.com/media/en/technical-documentation/data-sheets/ADF7021.pdf
 #define AFC_OFFSET_P25           0
 #endif
 
+/****** Support for 14.7456 MHz TCXO with R=2 ******/
+#elif defined(ADF7021_14_7456_R2)
+
+// R = 2, Icp = 2.10 mA
+// DEMOD_CLK = 2.9491 MHz (DSTAR)
+// DEMOD_CLK = 4.9152 MHz (DMR, YSF_L)
+// DEMOD_CLK = 3.6864 MHz (P25)
+// DEMOD_CLK = 7.3728 MHz (YSF_H)
+#define ADF7021_PFD              7372800.0
+
+// PLL (REG 01)
+#define ADF7021_REG1_VHF1        0x021FD021
+#define ADF7021_REG1_VHF2        0x021FD021
+#define ADF7021_REG1_UHF1        0x0057D021
+#define ADF7021_REG1_UHF2        0x0053D021
+
+// Deviation of modulator (REG 02)
+#define ADF7021_DEV_DSTAR        22U
+#define ADF7021_DEV_DMR          12U
+#define ADF7021_DEV_YSF_L        9U
+#define ADF7021_DEV_YSF_H        18U
+#if defined(ENABLE_P25_WIDE)
+#define ADF7021_DEV_P25          16U
+#else
+#define ADF7021_DEV_P25          11U
+#endif
+
+// TX/RX CLOCK register (REG 03)
+#define ADF7021_REG3_DSTAR       0x2A4C4D53
+#if defined(TEST_DAC)
+#define ADF7021_REG3_DMR         0x2A4C04D3
+#define ADF7021_REG3_YSF_L       0x2A4C04D3
+#define ADF7021_REG3_YSF_H       0x2A4C0493
+#define ADF7021_REG3_P25         0x2A4C04D3
+#else
+#define ADF7021_REG3_DMR         0x2A4C80D3
+#define ADF7021_REG3_YSF_L       0x2A4C80D3
+#define ADF7021_REG3_YSF_H       0x2A4CC093
+#define ADF7021_REG3_P25         0x2A4C6113
+#endif
+
+// Discriminator bandwith, demodulator (REG 04)
+// Bug in ADI evaluation software, use datasheet formula (4FSK)
+#define ADF7021_DISC_BW_DSTAR    597U // K=81
+#define ADF7021_DISC_BW_DMR      393U // K=32
+#define ADF7021_DISC_BW_YSF_L    393U // K=32
+#define ADF7021_DISC_BW_YSF_H    516U // K=28
+#define ADF7021_DISC_BW_P25      295U // K=32
+
+// Post demodulator bandwith (REG 04)
+#define ADF7021_POST_BW_DSTAR    8U
+#define ADF7021_POST_BW_DMR      150U
+#define ADF7021_POST_BW_YSF      20U
+#define ADF7021_POST_BW_P25      8U
+
+// IF filter (REG 05)
+#define ADF7021_REG5             0x000024F5
+
+// IF CAL (fine cal, defaults) (REG 06)
+#define ADF7021_REG6             0x05070E16
+
+// AFC configuration (REG 10)
+#define ADF7021_REG10_DSTAR      0x0C96473A
+
+#if defined(ADF7021_ENABLE_4FSK_AFC)
+#define ADF7021_REG10_DMR        0x01FE473A
+#define ADF7021_REG10_YSF        0x01FE473A
+#define ADF7021_REG10_P25        0x01FE473A
+#if defined(ADF7021_AFC_POS)
+#define AFC_OFFSET_DMR           -250
+#define AFC_OFFSET_YSF           -250
+#define AFC_OFFSET_P25           -250
+#else
+#define AFC_OFFSET_DMR           250
+#define AFC_OFFSET_YSF           250
+#define AFC_OFFSET_P25           250
+#endif
+#else
+#define ADF7021_REG10_DMR        0x049E472A
+#define ADF7021_REG10_YSF        0x049E472A
+#define ADF7021_REG10_P25        0x049E472A
+#define AFC_OFFSET_DMR           0
+#define AFC_OFFSET_YSF           0
+#define AFC_OFFSET_P25           0
+#endif
+
 /****** Support for 12.2880 MHz TCXO ******/
 #elif defined(ADF7021_12_2880)
 

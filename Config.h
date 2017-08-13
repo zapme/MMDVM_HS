@@ -32,8 +32,10 @@
 // #define DUPLEX
 
 // TCXO of the ADF7021
-// For 14.7456 MHz:
+// For 14.7456 MHz R = 4:
 #define ADF7021_14_7456
+// For 14.7456 MHz R = 2:
+// #define ADF7021_14_7456_R2
 // For 12.2880 MHz:
 // #define ADF7021_12_2880
 

@@ -311,7 +311,7 @@ void CIO::ifConf(MMDVM_STATE modemState, bool reset)
       ADF7021_REG4 |= (uint32_t) 0b11                      << 8;
       ADF7021_REG4 |= (uint32_t) ADF7021_DISC_BW_DMR       << 10;  // Disc BW
       ADF7021_REG4 |= (uint32_t) ADF7021_POST_BW_DMR       << 20;  // Post dem BW
-      ADF7021_REG4 |= (uint32_t) 0b10                      << 30;  // IF filter (25 kHz)
+      ADF7021_REG4 |= (uint32_t) 0b01                      << 30;  // IF filter (18.5 kHz)
 
       ADF7021_REG13 = (uint32_t) 0b1101                    << 0;   // register 13
       ADF7021_REG13 |= (uint32_t) ADF7021_SLICER_TH_DMR    << 4;   // slicer threshold
